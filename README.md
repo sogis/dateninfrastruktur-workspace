@@ -17,7 +17,7 @@ bindet Pfade, tatsächliche Remotes, Defaultbranches und Verantwortlichkeiten.
 Der Workspace liegt in `sogis/dateninfrastruktur-workspace`. Das
 Architekturrepo ist ein eigenes GitHub-Repository.
 
-Python 3.12+, Git und für unabhängige Reviews OpenCode 2.x verwenden.
+Python 3.9+, Git und für unabhängige Reviews OpenCode 2.x verwenden.
 
 ```sh
 ./workspace status --profile core
