@@ -1,5 +1,17 @@
 # Dateninfrastruktur Workspace
 
+## TODO
+
+- [ ] **Admin-Build vom Themenrepo entkoppeln.** Der Admin-Build übernimmt
+  heute die CSV-Verträge, die INTERLIS-Modelle und die kompilierten Modelle aus
+  einem Checkout des Themenrepos und packt sie ins JAR. Diese direkte
+  Build-Abhängigkeit wollen wir ablösen. Künftig soll sich das Admin-Image
+  ohne Checkout des Themenrepos bauen lassen. Wie Admin und der GRETL-Runner
+  dann dieselbe Vertrags- und Modellversion verwenden, legen wir bei der
+  Ablösung fest.
+
+## Workspace bedienen
+
 Der Workspace verwaltet eigenständige Git-Repositories. `repositories.json`
 bindet Pfade, tatsächliche Remotes, Defaultbranches und Verantwortlichkeiten.
 Der Workspace liegt in `sogis/dateninfrastruktur-workspace`. Das
