@@ -28,8 +28,8 @@ def main():
     review_args.add_argument('--phase',required=True)
     review_args.add_argument('--exclude-untracked',action='store_true')
     args=cli.parse_args()
-    if sys.version_info<(3,12):
-        raise WorkspaceError('Python 3.12 oder neuer erforderlich')
+    if sys.version_info<(3,9):
+        raise WorkspaceError('Python 3.9 oder neuer erforderlich')
     inventory=load(root/'repositories.json')
     if args.command=='verify':
         verify_root(root,inventory)

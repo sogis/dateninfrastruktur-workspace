@@ -3,6 +3,7 @@ from dataclasses import dataclass
 import json
 from pathlib import Path, PurePosixPath
 import re
+from typing import Optional
 
 CORE = frozenset({'stack', 'admin', 'sodata', 'jenkins', 'plugin', 'topics', 'architecture'})
 ID = re.compile(r'[a-z][a-z0-9-]*')
@@ -18,7 +19,7 @@ class WorkspaceError(ValueError):
 class Repository:
     id: str
     path: str
-    remote: str | None
+    remote: Optional[str]
     branch: str
     profile: str
     responsibility: str
