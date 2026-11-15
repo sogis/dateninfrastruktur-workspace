@@ -7,8 +7,13 @@ fi
 
 cd -P -- "$(dirname -- "${BASH_SOURCE[0]}")" || exit 1
 
+# Git-Hooks können Variablen des aufrufenden Repositories vererben.
+git_env=$(git rev-parse --local-env-vars) || exit 1
+unset $git_env
+
 result=0
-while IFS= read -r url || [[ -n $url ]]; do
+while IFS= read -r line || [[ -n $line ]]; do
+    IFS=$' \t' read -r url <<< "${line%$'\r'}"
     case $url in
         ''|\#*) continue ;;
     esac

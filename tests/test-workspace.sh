@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 set -eu
 
+git_env=$(git rev-parse --local-env-vars)
+unset $git_env
+
 source_dir=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)
 temp=$(mktemp -d)
 trap 'rm -rf -- "$temp"' EXIT
@@ -17,8 +20,9 @@ mkdir "$temp/workspace"
 cd -P -- "$temp/workspace"
 cp -R "$source_dir"/{workspace,.gitignore,README.md,AGENTS.md,LICENSE,.agents,tests} .
 git init -q
-printf '# Lokale Remotes\n\n%s\n' "$temp/produkt.git" > repositories.txt
-./workspace clone
+printf '  # Lokale Remotes\r\n  \r\n  %s  \r\n' "$temp/produkt.git" > repositories.txt
+GIT_WORK_TREE="$temp/anderer-worktree" ./workspace clone
+[[ ! -e $temp/anderer-worktree ]]
 [[ $(git -C produkt rev-parse --show-toplevel) == "$PWD/produkt" ]]
 [[ $(cat produkt/datei) == Fixture ]]
 
