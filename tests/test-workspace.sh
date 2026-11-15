@@ -14,13 +14,14 @@ printf 'Fixture\n' > "$temp/produkt/datei"
 git -C "$temp/produkt" add datei
 git -C "$temp/produkt" -c user.name=Fixture -c user.email=fixture@example.invalid \
     commit -qm Fixture
-git clone -q --bare "$temp/produkt" "$temp/produkt.git"
+mkdir "$temp/lokale Remotes"
+git clone -q --bare "$temp/produkt" "$temp/lokale Remotes/produkt.git"
 
 mkdir "$temp/workspace"
 cd -P -- "$temp/workspace"
 cp -R "$source_dir"/{workspace,.gitignore,README.md,AGENTS.md,LICENSE,.agents,tests} .
 git init -q
-printf '  # Lokale Remotes\r\n  \r\n  %s  \r\n' "$temp/produkt.git" > repositories.txt
+printf '  # Lokale Remotes\r\n  \r\n  %s  \r\n' "$temp/lokale Remotes/produkt.git" > repositories.txt
 GIT_WORK_TREE="$temp/anderer-worktree" ./workspace clone
 [[ ! -e $temp/anderer-worktree ]]
 [[ $(git -C produkt rev-parse --show-toplevel) == "$PWD/produkt" ]]

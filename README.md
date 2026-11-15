@@ -22,7 +22,7 @@ git -C dateninfrastruktur-admin pull --ff-only
 ```
 
 Pflege die Liste in `repositories.txt` mit einer Git-URL pro Zeile. Der letzte
-Teil der URL ohne `.git` ergibt den lokalen Verzeichnisnamen. Leere Zeilen
-und Zeilen, die mit `#` beginnen, werden übersprungen.
+Teil der URL ohne `.git` ergibt den lokalen Verzeichnisnamen. Leerzeichen am
+Zeilenrand, Leerzeilen und Kommentare mit `#` werden ignoriert.
 
 Der Offline-Test läuft mit `bash tests/test-workspace.sh`.
