@@ -1,50 +1,28 @@
-# Dateninfrastruktur Workspace
+# Dateninfrastruktur-Workspace
 
-## TODO
-
-- [ ] **Admin-Build vom Themenrepo entkoppeln.** Der Admin-Build übernimmt
-  heute die CSV-Verträge, die INTERLIS-Modelle und die kompilierten Modelle aus
-  einem Checkout des Themenrepos und packt sie ins JAR. Diese direkte
-  Build-Abhängigkeit wollen wir ablösen. Künftig soll sich das Admin-Image
-  ohne Checkout des Themenrepos bauen lassen. Wie Admin und der GRETL-Runner
-  dann dieselbe Vertrags- und Modellversion verwenden, legen wir bei der
-  Ablösung fest.
-
-## Workspace bedienen
-
-Der Workspace verwaltet eigenständige Git-Repositories. `repositories.json`
-bindet Pfade, tatsächliche Remotes, Defaultbranches und Verantwortlichkeiten.
-Der Workspace liegt in `sogis/dateninfrastruktur-workspace`. Das
-Architekturrepo ist ein eigenes GitHub-Repository.
-
-Python 3.9+, Git und für unabhängige Reviews OpenCode 2.x verwenden.
+Der Workspace klont die Produktrepositories und zeigt ihren lokalen Git-Status.
+Voraussetzungen sind Bash und Git.
 
 ```sh
-./workspace status --profile core
-./workspace bootstrap --profile core
-./workspace sync --repo admin --repo sodata
-./workspace verify
-./workspace snapshot --profile core --output .runtime/candidates/source-set.json
-./workspace review --task "$TASK_ROOT" --phase "$PHASE"
+git clone https://github.com/sogis/dateninfrastruktur-workspace.git
+cd dateninfrastruktur-workspace
+./workspace clone
+./workspace status
 ```
 
-`core` umfasst sechs Produkte und Architektur. `extended` wählt die
-zusätzlichen Projekte. `status` liest den Stand. `bootstrap` klont fehlende
-Repos mit konfiguriertem Remote. `sync` aktualisiert die explizit gewählten
-Repos per Fast-forward auf ihrem sauberen Defaultbranch. Vorhandene lokale
-Arbeit bleibt erhalten. `verify` prüft Gitgrenzen und Root-Index.
-`snapshot` und `review` binden ausschliesslich Commitstände. Mit
-`--exclude-untracked` können vorhandene unversionierte Dateien bewusst
-ausgeschlossen werden. Andere lokale Änderungen blockieren die Aufnahme.
+`clone` überspringt vorhandene Checkouts. `status` zeigt fehlende Repositories
+sowie Branch und lokale Änderungen vorhandener Checkouts. Ein anderweitig
+belegter Zielpfad wird gemeldet. Die Produktrepositories bleiben eigenständige
+Git-Repositories.
 
-Exitcodes sind 0 für Erfolg, 1 für Prüf- oder Bearbeitungsfehler und 2 für
-ungültige CLI-Argumente. Externe Reviewblocker erscheinen als
-`NICHT_PRUEFBAR` mit Ursache.
+Aktualisiere einzelne Checkouts direkt mit Git.
 
-Der externe Auftrag liefert ein normatives Dateimanifest und seine
-Checkliste unter `contracts/`. Ein JSON-Request unter
-`.work/requests/<phase>.json` benennt Repos, Basiscommits, Prompt, Reviewer,
-Ressourcengrenzen sowie Prüfprozesse und deren Abhängigkeiten. Das Gate
-bindet den Auftragsdigest, die exakten Quellstände, die neue Reviewersitzung,
-die ausgeführten Assertions und die Belegdateien. Details stehen im
-[Reviewformat](docs/review.md).
+```sh
+git -C dateninfrastruktur-admin pull --ff-only
+```
+
+Pflege die Liste in `repositories.txt` mit einer Git-URL pro Zeile. Der letzte
+Teil der URL ohne `.git` ergibt den lokalen Verzeichnisnamen. Leerzeichen am
+Zeilenrand, Leerzeilen und Kommentare mit `#` werden ignoriert.
+
+Der Offline-Test läuft mit `bash tests/test-workspace.sh`.

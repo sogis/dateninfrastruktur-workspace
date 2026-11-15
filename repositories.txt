@@ -1,0 +1,11 @@
+https://github.com/sogis/dateninfrastruktur-dev-stack.git
+https://github.com/sogis/dateninfrastruktur-admin.git
+https://github.com/sogis/dateninfrastruktur-sodata.git
+https://github.com/sogis/dateninfrastruktur-jenkins-dev.git
+https://github.com/sogis/dateninfrastruktur-jenkins-gretl-plugin.git
+https://github.com/sogis/dateninfrastruktur-themenrepo.git
+https://github.com/sogis/dateninfrastruktur-architektur.git
+https://github.com/sogis/dateninfrastruktur-diagramm.git
+https://github.com/sogis/dateninfrastruktur-datenwerkstatt.git
+https://github.com/sogis/dateninfrastruktur-agentic-bi-demo-001.git
+https://github.com/sogis/dateninfrastruktur-agentic-bi-demo-002.git
